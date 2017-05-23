@@ -1,2 +1,13 @@
-<h1>Kitchens#index</h1>
-<p>Find me in app/views/kitchens/index.html.erb</p>
+
+<div class="container text-center">
+<%= simple_form_for :search,  url: search_path , :method => :get do |f| %>
+    <%= f.input :city, :autofocus => true %>
+    <%= f.submit "Search", class:"btn btn-primary" %>
+<% end %>
+
+<ul>
+ <% @kitchens.each do |kitchen| %>
+    <li><%= kitchen.name %>, <%= kitchen.description  %></li>
+ <% end %>
+</ul>  
+</div>
