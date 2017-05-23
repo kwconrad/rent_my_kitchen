@@ -6,12 +6,19 @@ class ListingsController < ApplicationController
 
   def new
     @listing = Listing.new
+    @listing.start_time = Time.now
+    @listing.end_time = Time.now + 2.hour
+    @listing.price_per_hour = 6
+    @kitchen = set_kitchen
   end
 
   def create
     @listing = Listing.new(listing_params)
-    @listing.kitchen = current_user.kitchen
+    @kitchen = set_kitchen
+    @listing.kitchen = @kitchen
+    @listing.save
 
+    redirect_to kitchen_listings_path(@kitchen)
   end
 
   def edit
@@ -21,18 +28,15 @@ class ListingsController < ApplicationController
   def update
     # @listing set by set_listing method
     @listing.update(listing_params)
-    @listing.destroy
 
-    @listing.save
-
-    redirect_to listing_path(@listing)
+    redirect_to kitchen_path(@kitchen)
   end
 
   def destroy
     # @listing set by set_listing method
     @listing.destroy
 
-    redirect_to listings_path
+    redirect_to kitchens_path
   end
 
   def show
@@ -40,6 +44,9 @@ class ListingsController < ApplicationController
   end
 
   private
+  def set_kitchen
+    @kitchen = Kitchen.find(params[:kitchen_id])
+  end
 
   def set_listing
     @listing = Listing.find(params[:id])
