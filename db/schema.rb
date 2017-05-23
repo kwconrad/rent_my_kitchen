@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523151018) do
+ActiveRecord::Schema.define(version: 20170523165405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "amenities", force: :cascade do |t|
+    t.string   "name"
+    t.string   "category"
+    t.string   "font_awesome_icon"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "bookings", force: :cascade do |t|
     t.integer  "kitchen_id"
@@ -26,6 +34,15 @@ ActiveRecord::Schema.define(version: 20170523151018) do
     t.datetime "updated_at",                           null: false
     t.index ["booker_id"], name: "index_bookings_on_booker_id", using: :btree
     t.index ["kitchen_id"], name: "index_bookings_on_kitchen_id", using: :btree
+  end
+
+  create_table "kitchen_amenities", force: :cascade do |t|
+    t.integer  "kitchen_id"
+    t.integer  "amenity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["amenity_id"], name: "index_kitchen_amenities_on_amenity_id", using: :btree
+    t.index ["kitchen_id"], name: "index_kitchen_amenities_on_kitchen_id", using: :btree
   end
 
   create_table "kitchens", force: :cascade do |t|
@@ -96,6 +113,8 @@ ActiveRecord::Schema.define(version: 20170523151018) do
   end
 
   add_foreign_key "bookings", "kitchens"
+  add_foreign_key "kitchen_amenities", "amenities"
+  add_foreign_key "kitchen_amenities", "kitchens"
   add_foreign_key "kitchens", "users"
   add_foreign_key "listings", "kitchens"
   add_foreign_key "reviews", "kitchens"

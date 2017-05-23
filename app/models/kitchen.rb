@@ -7,6 +7,8 @@ class Kitchen < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :listings, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :kitchen_amenities
+  has_many :amenities, through: :kitchen_amenities
 
   validates :name, :description, :street_address, :city, :postal_code, :country, :capacity, presence: true
 end
