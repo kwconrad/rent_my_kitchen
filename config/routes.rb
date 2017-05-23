@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :kitchens
-  resources :listings, only: [:new, :index, :edit]
+  resources :kitchens do
+    resources :listings, only: [:new, :index, :edit]
+  end
 
   #for all listings created by user - admin_listings
   namespace :admin do

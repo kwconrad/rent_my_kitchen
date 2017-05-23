@@ -1,12 +1,10 @@
-<!--
-<%= form_for(@listing) do |f| %>
+<!-- This has to be changed -->
+<%= form_for(@kitchen, @listing) do |f| %>
   <%= select_date Date.today, prefix: :start_date %>
 
-  <%= f.label :address %>
-  <%= f.text_field :address %>
+  <%= f.input :price_per_hour %>
+  <%= f.text_field :price_per_hour %>
 
-  <%= f.label :rating %>
-  <%= f.text_field :rating %>
 
   <%= f.submit %>
-<% end %> -->
+<% end %>

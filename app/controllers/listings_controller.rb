@@ -2,7 +2,6 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :edit, :destroy]
 
   def index
-    @listings = Listing.all
   end
 
   def new
@@ -11,16 +10,22 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listing_params)
-    @kitchen.owner = current_user
-    if @listing.save
-      redirect_to listing_path(@listing)
-    else
-      render :new
-    end
+    @listing.kitchen = current_user.kitchen
+
   end
 
   def edit
     # @listing set by set_listing method
+  end
+
+  def update
+    # @listing set by set_listing method
+    @listing.update(listing_params)
+    @listing.destroy
+
+    @listing.save
+
+    redirect_to listing_path(@listing)
   end
 
   def destroy
@@ -28,14 +33,6 @@ class ListingsController < ApplicationController
     @listing.destroy
 
     redirect_to listings_path
-  end
-
-  def update
-    # @listing set by set_listing method
-    @listing.update(listing_params)
-    @listing.save
-
-    redirect_to listing_path(@listing)
   end
 
   def show
