@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :kitchens do
     resources :listings, only: [:new, :index, :edit]
+    resources :bookings
   end
 
   #for all listings created by user - admin_listings
