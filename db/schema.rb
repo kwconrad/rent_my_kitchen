@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523142722) do
+ActiveRecord::Schema.define(version: 20170523151018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20170523142722) do
     t.integer  "price_per_hour"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "photo"
     t.index ["user_id"], name: "index_kitchens_on_user_id", using: :btree
   end
 
@@ -59,7 +60,22 @@ ActiveRecord::Schema.define(version: 20170523142722) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "kitchen_id"
+    t.index ["kitchen_id"], name: "index_reviews_on_kitchen_id", using: :btree
     t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
+  end
+
+  create_table "user_accounts", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "address"
+    t.string   "photo"
+    t.string   "dob"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_user_accounts_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,5 +98,7 @@ ActiveRecord::Schema.define(version: 20170523142722) do
   add_foreign_key "bookings", "kitchens"
   add_foreign_key "kitchens", "users"
   add_foreign_key "listings", "kitchens"
+  add_foreign_key "reviews", "kitchens"
   add_foreign_key "reviews", "users"
+  add_foreign_key "user_accounts", "users"
 end
