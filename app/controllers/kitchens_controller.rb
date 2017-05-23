@@ -5,6 +5,13 @@ class KitchensController < ApplicationController
     @kitchens = Kitchen.all
   end
 
+  def search
+    @kitchen_search = params["search"][:city]
+    @kitchens = Kitchen.where(city: @kitchen_search)
+    render :index
+     
+  end
+
   def show
     # @kitchen set by :set_kitchen method
   end
