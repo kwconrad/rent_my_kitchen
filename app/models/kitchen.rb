@@ -1,4 +1,6 @@
 class Kitchen < ApplicationRecord
+  mount_uploader :photo, PhotoUploader
+
   alias_attribute :owner, :user
 
   belongs_to :user
