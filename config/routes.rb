@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :kitchens
+  resources :kitchens do
+    resouces :bookings
+  end
 
   devise_for :users
   root to: 'pages#home'
