@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :kitchens do
-    resouces :bookings
+    resources :bookings
   end
 
   devise_for :users
